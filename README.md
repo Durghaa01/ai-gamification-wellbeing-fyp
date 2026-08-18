@@ -31,7 +31,7 @@ The wider university application was developed collaboratively by a team of stud
 
 ## Documentation
 
-Additional project context is available in [`docs/project-overview.md`](docs/project-overview.md).
+📄 [Project Notes](docs/project-notes.md)
 
 ## Project Context
 
