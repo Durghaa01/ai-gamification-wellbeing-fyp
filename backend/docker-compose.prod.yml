@@ -1,0 +1,164 @@
+version: '3.8'
+
+# Production Docker Compose Configuration
+# Usage: docker compose -f docker-compose.prod.yml --profile llm up -d
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: mindwell
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mindwell_prod_change_me}
+      POSTGRES_DB: mindwell
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mindwell"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - mindwell-network
+
+  mongo:
+    image: mongo:7
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-mindwell}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-mindwell_mongo_change_me}
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "127.0.0.1/test", "--eval", "db.runCommand({ping:1})"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mindwell-network
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: always
+    ports:
+      - "11434:11434"
+    profiles:
+      - llm
+    volumes:
+      - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - mindwell-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: postgresql+asyncpg://mindwell:${POSTGRES_PASSWORD:-mindwell_prod_change_me}@db:5432/mindwell
+      ENVIRONMENT: production
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      OLLAMA_ENDPOINT: http://ollama:11434/api/generate
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-gpt-oss:20b}
+      OLLAMA_TIMEOUT: 120.0
+      VERTEX_PROJECT: ${VERTEX_PROJECT:-}
+      VERTEX_LOCATION: ${VERTEX_LOCATION:-us-central1}
+      VERTEX_MODEL: ${VERTEX_MODEL:-gemini-1.5-flash-001}
+      VERTEX_API_ENDPOINT: ${VERTEX_API_ENDPOINT:-}
+      MONGO_ENABLED: true
+      MONGO_URL: mongodb://${MONGO_USERNAME:-mindwell}:${MONGO_PASSWORD:-mindwell_mongo_change_me}@mongo:27017
+      LOG_LEVEL: INFO
+    depends_on:
+      db:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    networks:
+      - mindwell-network
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+      args:
+        API_BASE_URL: ${API_BASE_URL:-http://localhost:8000}
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - mindwell-network
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-cache:/var/cache/nginx
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - mindwell-network
+
+volumes:
+  postgres-data:
+    driver: local
+  mongo-data:
+    driver: local
+  ollama-data:
+    driver: local
+  nginx-cache:
+    driver: local
+
+networks:
+  mindwell-network:
+    driver: bridge

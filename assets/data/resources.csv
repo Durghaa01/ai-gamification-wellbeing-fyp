@@ -1,0 +1,31 @@
+﻿resource_id,title,category,mood,tags,description,link,popularity,rating
+R001,Peaceful Mind Piano,Music,Sad,piano calm ambient,Soft piano melodies to calm emotions,https://open.spotify.com/track/1,90,4.7
+R002,Lo-Fi Chillout,Music,Stressed,lofi beats study,Lo-fi beats to reduce stress,https://open.spotify.com/track/2,88,4.6
+R003,Good Vibes Only,Music,Happy,pop upbeat party,Upbeat playlist to boost mood,https://open.spotify.com/playlist/3,95,4.8
+R004,Acoustic Morning,Music,Neutral,acoustic relax,Light acoustic songs for balance,https://open.spotify.com/track/4,80,4.5
+R005,Calm Rain Ambience,Music,Sad,ambient rain focus,Rain sounds for relaxation,https://open.spotify.com/track/5,82,4.6
+R006,Breathe & Release,Exercise,Stressed,breathing stretch,Guided breathing + stretch 5min,https://www.youtube.com/watch?v=ex1,89,4.8
+R007,10-min Yoga Flow,Exercise,Happy,yoga flow energize,Short energizing yoga routine,https://www.youtube.com/watch?v=ex2,92,4.9
+R008,Gentle Stretch,Exercise,Sad,stretch gentle,Gentle stretching for mood,https://www.youtube.com/watch?v=ex3,85,4.6
+R009,Desk Mobility,Exercise,Stressed,desk quick,Quick desk mobility exercises,https://www.youtube.com/watch?v=ex4,78,4.4
+R010,Power Walk Plan,Exercise,Neutral,walk outdoor,10-min power walk guidance,https://www.youtube.com/watch?v=ex5,81,4.3
+R011,You Are Enough,Affirmation,Sad,affirmation voice,Short spoken affirmation,https://soundcloud.com/ex1,87,4.7
+R012,Stay Grounded,Affirmation,Stressed,calm ground,Grounding affirmation,https://soundcloud.com/ex2,86,4.6
+R013,Daily Positivity,Affirmation,Happy,positive gratitude,Morning positivity prompts,https://soundcloud.com/ex3,88,4.8
+R014,Micro-Meditation,Affirmation,Neutral,meditation 1min,1-minute micro-meditation,https://soundcloud.com/ex4,79,4.2
+R015,Gratitude Prompt,Affirmation,Happy,gratitude journal,Prompt to list 3 things you're grateful for,https://example.com/grat1,83,4.5
+R016,Coping with Stress,Article,Stressed,stress coping,Short article with coping tips,https://www.healthline.com/ex1,90,4.6
+R017,Find Joy in Small Things,Article,Sad,joy habits,Habits to increase small joys,https://www.psychologytoday.com/ex2,84,4.4
+R018,Boosting Happiness Daily,Article,Happy,happiness habits,Actions to boost daily happiness,https://www.mindful.org/ex3,87,4.7
+R019,Sleep Hygiene Tips,Article,Neutral,sleep health,Improve sleep routines,https://www.sleep.org/ex4,80,4.3
+R020,Mental Health Overview,Article,Neutral,overview education,Intro to mental health resources,https://example.edu/ex5,77,4
+R021,UCSI Counsellor Support,Counselling,Sad,counselling book,Book campus counselling,https://ucsi.edu.my/counselling,92,5
+R022,Stress Chatbot Assistant,Counselling,Stressed,chatbot relax,AI chatbot for quick calm sessions,https://chatbot.example.com,90,4.7
+R023,Peer Support Group,Counselling,Neutral,peer support,Join a peer support session,https://example.com/peers,82,4.4
+R024,Emergency Helpline,Counselling,Stressed,hotline urgent,Crisis helpline and steps,tel:+60123456789,95,4.9
+R025,Motivational Talk Series,Counselling,Happy,motivation talks,Motivational talks to inspire,https://www.youtube.com/watch?v=ex6,86,4.8
+R026,Calm Piano Extended,Music,Sad,piano calm long,30-min calm piano playlist,https://open.spotify.com/track/6,84,4.6
+R027,Focus Beats,Music,Stressed,focus beats,Instrumental beats for concentration,https://open.spotify.com/track/7,83,4.5
+R028,Evening Winddown,Exercise,Neutral,winddown stretch,Evening gentle wind-down routine,https://www.youtube.com/watch?v=ex7,79,4.2
+R029,Positive Self-Talk,Affirmation,Neutral,selftalk confidence,Guided self-talk exercises,https://example.com/selftalk,81,4.3
+R030,Short Mindful Walk,Exercise,Happy,mindful walk,5-min mindful walking guide,https://www.youtube.com/watch?v=ex8,85,4.6
