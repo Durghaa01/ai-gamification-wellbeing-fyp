@@ -48,7 +48,7 @@ app.*.map.json
 /android/app/release
 
 # Local-only docs
-/docs/
+
 
 # VS Code configuration - Everything except task, launch and extension is ignored. setting.json is ignored as it points to local cmake directory
 .vscode/*
